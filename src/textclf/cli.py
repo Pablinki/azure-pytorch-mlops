@@ -21,7 +21,7 @@ app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False)
 log = logging.getLogger("textclf")
 
 
-def _run(fn: Callable[[], None]) -> None:
+def _run(fn: Callable[[], object]) -> None:
     """Single error boundary for every command: log once, exit with a stable code."""
     try:
         fn()

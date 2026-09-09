@@ -1,0 +1,6 @@
+2026-09-09 13:33:23,532 INFO textclf.data: prepared fancyzhx/ag_news -> data\ag_news rows={'train': 120000, 'test': 7600} labels=['World', 'Sports', 'Business', 'Sci/Tech']
+real	1m39.986s
+total 18593
+-rw-r--r-- 1 juanp 197609       58 Sep  9 13:33 labels.json
+-rw-r--r-- 1 juanp 197609  1196506 Sep  9 13:33 test.parquet
+-rw-r--r-- 1 juanp 197609 17834399 Sep  9 13:33 train.parquet

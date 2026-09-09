@@ -13,6 +13,19 @@ class _HttpError(Exception):
         self.status_code = status_code
 
 
+class _Response:
+    def __init__(self, status_code: int) -> None:
+        self.status_code = status_code
+
+
+class _RequestsStyleError(Exception):
+    """requests/httpx/huggingface_hub expose the status on `.response`, not on the exception."""
+
+    def __init__(self, status_code: int) -> None:
+        super().__init__(f"HTTP {status_code}")
+        self.response = _Response(status_code)
+
+
 @pytest.mark.parametrize(
     ("exc", "expected"),
     [
@@ -22,6 +35,8 @@ class _HttpError(Exception):
         (_HttpError(503), True),
         (_HttpError(404), False),
         (_HttpError(401), False),
+        (_RequestsStyleError(502), True),
+        (_RequestsStyleError(403), False),
         (ValueError("bad input"), False),
         (KeyError("k"), False),
     ],

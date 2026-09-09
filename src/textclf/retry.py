@@ -28,7 +28,9 @@ TRANSIENT_STATUS = {408, 429, 500, 502, 503, 504}
 def is_transient(exc: BaseException) -> bool:
     if isinstance(exc, ConnectionError | TimeoutError):
         return True
-    status = getattr(exc, "status_code", None)  # azure.core HttpResponseError, httpx errors
+    status = getattr(exc, "status_code", None)  # azure.core HttpResponseError
+    if status is None:  # requests / httpx / huggingface_hub keep it on the response object
+        status = getattr(getattr(exc, "response", None), "status_code", None)
     return status in TRANSIENT_STATUS
 
 
