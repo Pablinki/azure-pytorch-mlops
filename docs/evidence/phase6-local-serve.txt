@@ -1,0 +1,33 @@
+$ TEXTCLF_PORT=8010 LOG_FORMAT=json uv run textclf serve     (model: outputs/model from make train-local)
+
+$ curl -s localhost:8010/health
+{"status":"ok","version":"0.1.0"}
+
+$ curl -s -i localhost:8010/ready
+HTTP/1.1 200 OK
+x-request-id: 6c21ed56-73f8-4e44-8830-5fb532f4c484
+{"status":"ready"}
+
+$ curl -s -X POST localhost:8010/predict -H 'content-type: application/json' -H 'x-request-id: demo-1' \
+    -d '{"texts":["Stocks rally as tech earnings beat expectations","Real Madrid wins the derby in extra time"]}'
+{
+    "predictions": [
+        {"label": "Business", "confidence": 0.8068798780441284,
+         "scores": {"World": 0.0630, "Sports": 0.0568, "Business": 0.8069, "Sci/Tech": 0.0733}},
+        {"label": "Sports", "confidence": 0.7803677320480347,
+         "scores": {"World": 0.1221, "Sports": 0.7804, "Business": 0.0339, "Sci/Tech": 0.0636}}
+    ],
+    "model_version": "0.1.0",
+    "request_id": "demo-1"
+}
+
+$ curl -s -X POST localhost:8010/predict -H 'content-type: application/json' -d '{"texts":[]}'
+{"detail":[{"type":"too_short","loc":["body","texts"],"msg":"List should have at least 1 item after validation, not 0", ...}]}   (HTTP 422)
+
+server log (LOG_FORMAT=json):
+{"ts": "2026-09-09T19:49:43Z", "level": "INFO", "logger": "uvicorn.error", "msg": "Uvicorn running on http://127.0.0.1:8010 (Press CTRL+C to quit)"}
+{"ts": "2026-09-09T19:49:44Z", "level": "INFO", "logger": "uvicorn.access", "msg": "127.0.0.1:55332 - \"POST /predict HTTP/1.1\" 200"}
+{"ts": "2026-09-09T19:49:44Z", "level": "INFO", "logger": "uvicorn.access", "msg": "127.0.0.1:55337 - \"POST /predict HTTP/1.1\" 422"}
+
+$ make check  ->  ruff clean, mypy strict clean, 146 passed, coverage 96.53 %
+$ az bicep build -f infra/main.bicep && az bicep build -f infra/app.bicep  ->  both OK, no warnings (Bicep CLI 0.47.16)
