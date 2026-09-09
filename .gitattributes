@@ -1,0 +1,6 @@
+# Normalise to LF everywhere: Makefiles, Dockerfiles and shell snippets break with CRLF,
+# and the repo is built on Linux (GitHub Actions, ACR, AML) even when edited on Windows.
+* text=auto eol=lf
+*.png binary
+*.parquet binary
+*.pt binary

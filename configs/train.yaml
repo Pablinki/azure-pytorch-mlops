@@ -1,0 +1,26 @@
+# Every knob in one place. Values mirror the pydantic defaults in src/textclf/config.py;
+# unknown keys are rejected (extra="forbid") so a typo fails fast instead of silently using a default.
+data:
+  dataset_id: fancyzhx/ag_news
+  max_len: 128
+  vocab_size: 30000
+  min_freq: 2
+  val_fraction: 0.1
+  num_workers: 2
+
+model:
+  name: textcnn
+  embed_dim: 128
+  num_filters: 100
+  kernel_sizes: [3, 4, 5]
+  dropout: 0.3
+
+train:
+  epochs: 5
+  batch_size: 64
+  lr: 0.002
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  amp: true
+  seed: 42
+  early_stopping_patience: 2

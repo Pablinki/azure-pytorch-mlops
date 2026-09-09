@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.pytest_tmp/
+.coverage
+coverage.xml
+htmlcov/
+
+# Project runtime artifacts (never committed)
+.env
+data/
+outputs/
+mlruns/
+model/
+model_download/
+*.pt
+*.tmp

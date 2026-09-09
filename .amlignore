@@ -1,0 +1,11 @@
+.git
+.venv
+data
+outputs
+mlruns
+model_download
+model
+tests
+docs
+.github
+**/__pycache__
