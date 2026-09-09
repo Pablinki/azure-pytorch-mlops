@@ -1,0 +1,61 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      model_version:
+        description: Azure ML model version to bake into the image
+        default: "1"
+
+permissions:
+  id-token: write        # lets azure/login request an OIDC token
+  contents: read
+
+concurrency: { group: deploy-main, cancel-in-progress: false }
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    env:
+      RG: ${{ vars.AZURE_RG }}
+      ACR: ${{ vars.AZURE_ACR_NAME }}
+      WS: ${{ vars.AZURE_ML_WORKSPACE }}
+      ACA_ENV: ${{ vars.ACA_ENV }}
+      MODEL_VERSION: ${{ inputs.model_version || vars.MODEL_VERSION }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Download the registered model
+        run: |
+          az extension add -n ml -y
+          az ml model download --name textclf --version "$MODEL_VERSION" -g "$RG" -w "$WS" --download-path model_download
+          MODEL_DIR=$(dirname "$(find model_download -name model.pt | head -n1)")
+          test -n "$MODEL_DIR" && cp -r "$MODEL_DIR" model && ls model
+
+      - name: Build the image in ACR
+        run: az acr build --registry "$ACR" --image "textclf-api:${{ github.sha }}" --file Dockerfile .
+
+      - name: Deploy the container app (same module as Phase 7)
+        run: |
+          az deployment group create -g "$RG" -f infra/app.bicep \
+            -p baseName=textclf -p acrName="$ACR" -p acaEnvName="$ACA_ENV" -p assignAcrPull=false \
+            -p apiImage="$ACR.azurecr.io/textclf-api:${{ github.sha }}"
+
+      - name: Smoke test
+        run: |
+          FQDN=$(az containerapp show -n textclf-api -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)
+          curl -fsS --retry 5 --retry-delay 10 "https://$FQDN/ready"
+          curl -fsS -X POST "https://$FQDN/predict" -H 'content-type: application/json' \
+               -d '{"texts":["Stocks rally as tech earnings beat expectations"]}'

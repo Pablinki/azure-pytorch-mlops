@@ -1,0 +1,21 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+type: command
+experiment_name: textclf
+display_name: textclf-textcnn
+description: Train TextCNN on AG News with MLflow tracking
+code: ..                          # snapshot of the repo (minus .amlignore)
+command: >-
+  pip install --no-deps . &&
+  textclf train --config configs/train.yaml
+  --data-dir ${{inputs.data_dir}} --output-dir ${{outputs.model_dir}} --epochs ${{inputs.epochs}}
+inputs:
+  data_dir:
+    type: uri_folder
+    path: azureml:ag-news:1
+  epochs: 5
+outputs:
+  model_dir:
+    type: uri_folder
+environment: azureml:textclf-train@latest
+compute: azureml:cpu-cluster
+tags: { project: textclf, framework: pytorch }

@@ -1,0 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+name: ag-news
+version: 1
+type: uri_folder
+path: ../data/ag_news             # uploaded to the workspace blob datastore on create
+description: AG News train/test parquet produced by `textclf prepare-data`

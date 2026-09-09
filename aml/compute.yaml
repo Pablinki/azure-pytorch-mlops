@@ -1,0 +1,8 @@
+$schema: https://azuremlschemas.azureedge.net/latest/amlCompute.schema.json
+name: cpu-cluster
+type: amlcompute
+size: Standard_DS3_v2          # 4 vCPU / 14 GB; swap for Standard_NC4as_T4_v3 + the CUDA base image for GPU
+min_instances: 0               # nothing runs -> nothing is billed
+max_instances: 4
+idle_time_before_scale_down: 120
+tier: dedicated                # low_priority is cheaper and exercises the SIGTERM/resume path

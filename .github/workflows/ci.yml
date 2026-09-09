@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  pull_request:
+  workflow_call:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - name: Install (CPU torch)
+        run: |
+          python -m pip install -U pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[train,serve,dev]"
+      - name: Lint
+        run: ruff check . && ruff format --check .
+      - name: Type check
+        run: mypy src
+      - name: Tests (coverage >= 80 %)
+        run: pytest
+      - name: Bicep lint
+        run: az bicep build -f infra/main.bicep && az bicep build -f infra/app.bicep

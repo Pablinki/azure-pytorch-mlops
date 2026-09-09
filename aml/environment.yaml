@@ -1,0 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: textclf-train
+description: CPU training environment (PyTorch + MLflow); built in the workspace ACR
+build:
+  path: ..                          # repo root is the build context (.amlignore trims it)
+  dockerfile_path: aml/Dockerfile.train
