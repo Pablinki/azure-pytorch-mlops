@@ -18,6 +18,8 @@ htmlcov/
 data/
 outputs/
 mlruns/
+mlruns.db
+mlartifacts/
 model/
 model_download/
 *.pt

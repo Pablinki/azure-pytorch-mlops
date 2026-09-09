@@ -36,6 +36,25 @@ The dependency table at the end justifies every third-party package in one line.
 - **Consequence:** two resolution paths (lock locally, floors in images). Accepted: the images are rebuilt from
   scratch per SHA and their torch build must differ (CPU wheel) anyway.
 
+## D6. MLflow local backend is `sqlite:///mlruns.db`, not `./mlruns`
+- **Context:** MLflow 3 raises on the legacy filesystem tracking store unless `MLFLOW_ALLOW_FILE_STORE=true`.
+- **Decision:** `configure_tracking()` uses `MLFLOW_TRACKING_URI` when set (Azure ML exports it inside jobs),
+  respects an explicit `mlflow.set_tracking_uri`, and otherwise defaults to a sqlite file in the working dir.
+- **Consequence:** one code path locally and in the cloud; `mlruns.db` and `mlartifacts/` are git-ignored.
+
+## D7. Artifacts are attached to the run by id, after the run context closes
+- **Context:** `run_training` reloads `best.pt` and exports artifacts after `Trainer.fit()` returns, i.e. after
+  the `with mlflow.start_run()` block. The fluent `mlflow.log_artifacts` would then open an implicit run and
+  leave it active, breaking the next training in the same process.
+- **Decision:** `Trainer.fit` records `run_id`; `export_artifacts` logs through `MlflowClient().log_artifacts(run_id, ...)`.
+- **Consequence:** no hidden runs; a test asserts that no run leaks between trainings.
+
+## D8. Signal handlers are installed inside `fit()` and restored afterwards
+- **Context:** the plan registers SIGTERM/SIGINT handlers in `Trainer.__init__`; that leaks the handler into the
+  host process (tests, notebooks) and fails outside the main thread.
+- **Decision:** install in `fit()`, restore the previous handlers in a `finally`, ignore `ValueError` off-thread.
+- **Consequence:** identical preemption behaviour on Azure ML, no side effects on the caller.
+
 ## Dependency justification
 
 | Package | Why |

@@ -1,0 +1,43 @@
+$ make train-local   (uv run textclf train --epochs 1 --limit 5000)   -- Windows 11, CPU, 2026-09-09
+2026-09-09 13:43:00,775 INFO textclf.data: data: train=4500 val=500 vocab=10166 classes=4 limit=5000
+2026-09-09 13:43:00,782 INFO textclf.train: model=textcnn parameters=1456352
+2026-09-09 13:43:01,659 INFO textclf.train: mlflow tracking uri: sqlite:///mlruns.db
+2026-09-09 13:43:11,069 INFO textclf.train: epoch=0 train_loss=1.1956 val_loss=0.8825 val_acc=0.6580 val_f1=0.6424
+2026-09-09 13:43:11,157 INFO textclf.train: exported model.pt, vocab.json, labels.json, config.json, metrics.json to outputs\model
+real    0m15.175s
+
+$ ls outputs/model
+-rw-r--r-- 1 juanp 197609     550 Sep  9 13:43 config.json
+-rw-r--r-- 1 juanp 197609      58 Sep  9 13:43 labels.json
+-rw-r--r-- 1 juanp 197609     159 Sep  9 13:43 metrics.json
+-rw-r--r-- 1 juanp 197609    1161 Sep  9 13:43 metrics_test.json
+-rw-r--r-- 1 juanp 197609 5828907 Sep  9 13:43 model.pt
+-rw-r--r-- 1 juanp 197609  107989 Sep  9 13:43 vocab.json
+
+$ cat outputs/model/metrics.json
+{
+  "best_val_macro_f1": 0.6424174291505645,
+  "best_val_accuracy": 0.658,
+  "best_epoch": 0.0,
+  "epochs_run": 1.0,
+  "wall_clock_s": 9.45043160021305
+}
+$ uv run textclf evaluate --model-dir outputs/model --data-dir data/ag_news --split test
+              precision    recall  f1-score   support
+
+       World     0.7077    0.7200    0.7138      1900
+      Sports     0.7796    0.8116    0.7953      1900
+    Business     0.8954    0.3289    0.4811      1900
+    Sci/Tech     0.5366    0.8447    0.6563      1900
+
+    accuracy                         0.6763      7600
+   macro avg     0.7298    0.6763    0.6616      7600
+weighted avg     0.7298    0.6763    0.6616      7600
+
+2026-09-09 13:44:29,033 INFO textclf.evaluate: test: accuracy=0.6763 macro_f1=0.6616 -> outputs\model\metrics_test.json
+
+$ mlflow run (sqlite:///mlruns.db)
+run 26498218aaff46d493ebe2af4587ecae FINISHED
+  params: {'model.name': 'textcnn', 'model.embed_dim': '128', 'model.num_filters': '100', 'model.kernel_sizes': '[3, 4, 5]', 'model.dropout': '0.3', 'train.epochs': '1', 'train.batch_size': '64', 'train.lr': '0.002', 'train.weight_decay': '0.01', 'train.max_grad_norm': '1.0', 'train.amp': 'True', 'train.seed': '42', 'train.early_stopping_patience': '2', 'device': 'cpu', 'parameters': '1456352'}
+  metrics: {'train_loss': 1.1956, 'val_loss': 0.8825, 'val_accuracy': 0.658, 'val_macro_f1': 0.6424, 'best_val_macro_f1': 0.6424, 'best_val_accuracy': 0.658, 'best_epoch': 0.0, 'epochs_run': 1.0, 'wall_clock_s': 9.4504}
+  artifacts: ['model/config.json', 'model/labels.json', 'model/metrics.json', 'model/model.pt', 'model/vocab.json']

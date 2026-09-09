@@ -11,6 +11,13 @@ import pytest
 from textclf.logging_conf import JsonFormatter, configure_logging
 
 
+@pytest.fixture(autouse=True)
+def _reset_root_logging() -> None:
+    """configure_logging() attaches a handler to the captured stdout; drop it after each test."""
+    yield
+    logging.basicConfig(force=True, handlers=[logging.NullHandler()])
+
+
 def _record(msg: str, **extra: object) -> logging.LogRecord:
     record = logging.LogRecord("textclf.test", logging.INFO, __file__, 1, msg, None, None)
     for k, v in extra.items():

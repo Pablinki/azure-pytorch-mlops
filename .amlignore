@@ -3,6 +3,8 @@
 data
 outputs
 mlruns
+mlruns.db
+mlartifacts
 model_download
 model
 tests

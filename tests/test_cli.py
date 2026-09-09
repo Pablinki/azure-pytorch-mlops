@@ -57,3 +57,8 @@ def test_config_error_maps_to_exit_code_2(tmp_path: Path) -> None:
     with pytest.raises(typer.Exit) as info:
         _run(lambda: load_config(tmp_path / "missing.yaml"))
     assert info.value.exit_code == ConfigError.exit_code == 2
+
+
+def test_train_with_missing_config_exits_2(tmp_path: Path) -> None:
+    result = runner.invoke(app, ["train", "--config", str(tmp_path / "missing.yaml")])
+    assert result.exit_code == ConfigError.exit_code
