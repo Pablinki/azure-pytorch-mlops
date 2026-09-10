@@ -6,3 +6,5 @@ min_instances: 0               # nothing runs -> nothing is billed
 max_instances: 4
 idle_time_before_scale_down: 120
 tier: dedicated                # low_priority is cheaper and exercises the SIGTERM/resume path
+identity:
+  type: system_assigned        # pulls the training image from the ACR (AcrPull role, see `make compute`); no admin passwords

@@ -52,8 +52,11 @@ provision:  ## Phase 4: resource group + platform (main.bicep). Review what-if f
 	$(ENV) az bicep build -f infra/main.bicep && az bicep build -f infra/app.bicep
 	$(ENV) az deployment group what-if -g $$AZURE_RG -f infra/main.bicep -p baseName=textclf
 
-compute:  ## Phase 5: amlcompute cluster (min 0)
+compute:  ## Phase 5: amlcompute cluster (min 0) + AcrPull for its managed identity
 	$(ENV) az ml compute create -f aml/compute.yaml -g $$AZURE_RG -w $$AZURE_ML_WORKSPACE
+	$(ENV) MSYS_NO_PATHCONV=1 az role assignment create --role AcrPull --assignee-principal-type ServicePrincipal \
+	  --assignee-object-id $$(az ml compute show -n cpu-cluster -g $$AZURE_RG -w $$AZURE_ML_WORKSPACE --query identity.principal_id -o tsv) \
+	  --scope $$(az acr show -n $$AZURE_ACR_NAME -g $$AZURE_RG --query id -o tsv)
 
 env:  ## Phase 5: training environment image built in ACR
 	$(ENV) az ml environment create -f aml/environment.yaml -g $$AZURE_RG -w $$AZURE_ML_WORKSPACE

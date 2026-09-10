@@ -100,6 +100,13 @@ The dependency table at the end justifies every third-party package in one line.
   `Predictor.from_dir`, and document `minReplicas: 1` as the production knob.
 - **Consequence:** measured in `docs/evidence/` (cold-start latency vs warm p95).
 
+## D17. The AML cluster pulls images with a managed identity, not the ACR admin user
+- **Context:** the first smoke job failed with "Failed to pull Docker image ... ensure the ACR has Admin user
+  enabled or a Managed Identity with AcrPull". `adminUserEnabled: false` is deliberate (no registry passwords).
+- **Decision:** `aml/compute.yaml` gives `cpu-cluster` a system-assigned identity and `make compute` grants it
+  `AcrPull` on the workspace ACR; the container app already does the same for serving.
+- **Consequence:** every image pull in the project (training and serving) is identity-based; the admin user stays off.
+
 ## Dependency justification
 
 | Package | Why |
