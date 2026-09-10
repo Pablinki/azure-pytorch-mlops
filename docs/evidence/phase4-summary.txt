@@ -1,0 +1,5 @@
+$ az deployment group create -g rg-textclf -n main -f infra/main.bicep -p baseName=textclf   -> real 3m9.871s, provisioningState Succeeded
+outputs: acrName=acrtextclfn35yfcrrr4src acrLoginServer=acrtextclfn35yfcrrr4src.azurecr.io storageAccountName=sttextclfn35yfcrrr4src
+         mlWorkspaceName=mlw-textclf acaEnvName=cae-textclf apiFqdn=textclf-api.jollygrass-ac688737.eastus2.azurecontainerapps.io
+$ curl https://textclf-api.jollygrass-ac688737.eastus2.azurecontainerapps.io/  -> HTTP 200 in 1.54s, <title>Azure Container Apps</title> (placeholder image)
+GitHub: https://github.com/Pablinki/azure-pytorch-mlops  run 34509311910: ci/quality success, deploy skipped (vars not set yet)

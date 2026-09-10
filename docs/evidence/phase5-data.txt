@@ -1,0 +1,9 @@
+Uploading ag_news (19.03 MBs):   0%|          | 0/19030963 [00:00<?, ?it/s]Uploading ag_news (19.03 MBs):   6%|6         | 1196564/19030963 [00:00<00:11, 1521155.12it/s]Uploading ag_news (19.03 MBs): 100%|##########| 19030963/19030963 [00:10<00:00, 1874871.82it/s]Uploading ag_news (19.03 MBs): 100%|##########| 19030963/19030963 [00:10<00:00, 1866604.77it/s]
+
+
+{
+  "name": "ag-news",
+  "path": "azureml://subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourcegroups/rg-textclf/workspaces/mlw-textclf/datastores/workspaceblobstore/paths/LocalUpload/fff4dc4d700ac462bde228199a8a25b9571db374dfb60f32aa447e0cbfc22203/ag_news/",
+  "type": "uri_folder",
+  "version": "1"
+}

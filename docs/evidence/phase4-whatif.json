@@ -1,0 +1,292 @@
+{
+  "changes": [
+    {
+      "after": {
+        "apiVersion": "2024-03-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/containerApps/textclf-api",
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "location": "eastus2",
+        "name": "textclf-api",
+        "properties": {
+          "configuration": {
+            "ingress": {
+              "external": true,
+              "targetPort": 80,
+              "transport": "auto"
+            }
+          },
+          "managedEnvironmentId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/managedEnvironments/cae-textclf",
+          "template": {
+            "containers": [
+              {
+                "env": [
+                  {
+                    "name": "LOG_FORMAT",
+                    "value": "json"
+                  },
+                  {
+                    "name": "TEXTCLF_HOST",
+                    "value": "0.0.0.0"
+                  },
+                  {
+                    "name": "TEXTCLF_MODEL_URI",
+                    "value": "file:///app/model"
+                  },
+                  {
+                    "name": "TEXTCLF_TORCH_THREADS",
+                    "value": "2"
+                  }
+                ],
+                "image": "mcr.microsoft.com/k8se/quickstart:latest",
+                "name": "api",
+                "resources": {
+                  "cpu": 1.0,
+                  "memory": "2Gi"
+                }
+              }
+            ],
+            "scale": {
+              "maxReplicas": 5,
+              "minReplicas": 0,
+              "rules": [
+                {
+                  "http": {
+                    "metadata": {
+                      "concurrentRequests": "20"
+                    }
+                  },
+                  "name": "http-concurrency"
+                }
+              ]
+            }
+          }
+        },
+        "resourceGroup": "rg-textclf",
+        "type": "Microsoft.App/containerApps"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/containerApps/textclf-api",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2024-03-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/managedEnvironments/cae-textclf",
+        "location": "eastus2",
+        "name": "cae-textclf",
+        "properties": {
+          "appLogsConfiguration": {
+            "destination": "log-analytics",
+            "logAnalyticsConfiguration": {
+              "customerId": "[reference('/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf', '2023-09-01').customerId]",
+              "sharedKey": "*******"
+            }
+          }
+        },
+        "resourceGroup": "rg-textclf",
+        "type": "Microsoft.App/managedEnvironments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/managedEnvironments/cae-textclf",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-07-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src",
+        "location": "eastus2",
+        "name": "acrtextclfn35yfcrrr4src",
+        "properties": {
+          "adminUserEnabled": false
+        },
+        "resourceGroup": "rg-textclf",
+        "sku": {
+          "name": "Basic"
+        },
+        "type": "Microsoft.ContainerRegistry/registries"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src/providers/Microsoft.Authorization/roleAssignments/4dfd5b03-1387-5841-afd9-9a0041833b48",
+        "name": "4dfd5b03-1387-5841-afd9-9a0041833b48",
+        "properties": {
+          "principalId": "[reference('/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/containerApps/textclf-api', '2024-03-01', 'full').identity.principalId]",
+          "roleDefinitionId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d"
+        },
+        "resourceGroup": "rg-textclf",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src/providers/Microsoft.Authorization/roleAssignments/4dfd5b03-1387-5841-afd9-9a0041833b48",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2020-02-02",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Insights/components/appi-textclf",
+        "kind": "web",
+        "location": "eastus2",
+        "name": "appi-textclf",
+        "properties": {
+          "Application_Type": "web",
+          "WorkspaceResourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf"
+        },
+        "resourceGroup": "rg-textclf",
+        "type": "Microsoft.Insights/components"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Insights/components/appi-textclf",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-07-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.KeyVault/vaults/kv-textclf-n35yfcrr",
+        "location": "eastus2",
+        "name": "kv-textclf-n35yfcrr",
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "fc2b8238-9289-425f-b1b7-b27003d711f3"
+        },
+        "resourceGroup": "rg-textclf",
+        "type": "Microsoft.KeyVault/vaults"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.KeyVault/vaults/kv-textclf-n35yfcrr",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2024-04-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf",
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "location": "eastus2",
+        "name": "mlw-textclf",
+        "properties": {
+          "applicationInsights": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Insights/components/appi-textclf",
+          "containerRegistry": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src",
+          "friendlyName": "textclf",
+          "keyVault": "*******",
+          "publicNetworkAccess": "Enabled",
+          "storageAccount": "*******"
+        },
+        "resourceGroup": "rg-textclf",
+        "type": "Microsoft.MachineLearningServices/workspaces"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-09-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf",
+        "location": "eastus2",
+        "name": "log-textclf",
+        "properties": {
+          "retentionInDays": 30,
+          "sku": {
+            "name": "PerGB2018"
+          }
+        },
+        "resourceGroup": "rg-textclf",
+        "type": "Microsoft.OperationalInsights/workspaces"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Storage/storageAccounts/sttextclfn35yfcrrr4src",
+        "kind": "StorageV2",
+        "location": "eastus2",
+        "name": "sttextclfn35yfcrrr4src",
+        "properties": {
+          "allowBlobPublicAccess": false,
+          "minimumTlsVersion": "TLS1_2",
+          "supportsHttpsTrafficOnly": true
+        },
+        "resourceGroup": "rg-textclf",
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "type": "Microsoft.Storage/storageAccounts"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Storage/storageAccounts/sttextclfn35yfcrrr4src",
+      "symbolicName": null,
+      "unsupportedReason": null
+    }
+  ],
+  "diagnostics": null,
+  "error": null,
+  "potentialChanges": null,
+  "status": "Succeeded"
+}

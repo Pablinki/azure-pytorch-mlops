@@ -1,0 +1,3 @@
+Principal    Scope
+-----------  ------------------------------------------------------------------------------------------------------------------------------------------------
+User         /subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Storage/storageAccounts/sttextclfn35yfcrrr4src

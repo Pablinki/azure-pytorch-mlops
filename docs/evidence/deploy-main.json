@@ -1,0 +1,418 @@
+{
+  "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Resources/deployments/main",
+  "location": null,
+  "name": "main",
+  "properties": {
+    "correlationId": "709895e0-ef16-49bb-acf4-bd1f5edf23ba",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "log-textclf",
+            "resourceType": "Microsoft.OperationalInsights/workspaces"
+          }
+        ],
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Insights/components/appi-textclf",
+        "resourceGroup": "rg-textclf",
+        "resourceName": "appi-textclf",
+        "resourceType": "Microsoft.Insights/components"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "acrtextclfn35yfcrrr4src",
+            "resourceType": "Microsoft.ContainerRegistry/registries"
+          },
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Insights/components/appi-textclf",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "appi-textclf",
+            "resourceType": "Microsoft.Insights/components"
+          },
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.KeyVault/vaults/kv-textclf-n35yfcrr",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "kv-textclf-n35yfcrr",
+            "resourceType": "Microsoft.KeyVault/vaults"
+          },
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Storage/storageAccounts/sttextclfn35yfcrrr4src",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "sttextclfn35yfcrrr4src",
+            "resourceType": "Microsoft.Storage/storageAccounts"
+          }
+        ],
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf",
+        "resourceGroup": "rg-textclf",
+        "resourceName": "mlw-textclf",
+        "resourceType": "Microsoft.MachineLearningServices/workspaces"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "log-textclf",
+            "resourceType": "Microsoft.OperationalInsights/workspaces"
+          },
+          {
+            "apiVersion": "2023-09-01",
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "log-textclf",
+            "resourceType": "Microsoft.OperationalInsights/workspaces"
+          },
+          {
+            "actionName": "listKeys",
+            "apiVersion": "2023-09-01",
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "log-textclf",
+            "resourceType": "Microsoft.OperationalInsights/workspaces"
+          }
+        ],
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/managedEnvironments/cae-textclf",
+        "resourceGroup": "rg-textclf",
+        "resourceName": "cae-textclf",
+        "resourceType": "Microsoft.App/managedEnvironments"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/managedEnvironments/cae-textclf",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "cae-textclf",
+            "resourceType": "Microsoft.App/managedEnvironments"
+          },
+          {
+            "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src",
+            "resourceGroup": "rg-textclf",
+            "resourceName": "acrtextclfn35yfcrrr4src",
+            "resourceType": "Microsoft.ContainerRegistry/registries"
+          }
+        ],
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Resources/deployments/api",
+        "resourceGroup": "rg-textclf",
+        "resourceName": "api",
+        "resourceType": "Microsoft.Resources/deployments"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT2M42.9377116S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/containerApps/textclf-api",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.App/containerApps"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.App/managedEnvironments/cae-textclf",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.App/managedEnvironments"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.ContainerRegistry/registries"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.ContainerRegistry/registries/acrtextclfn35yfcrrr4src/providers/Microsoft.Authorization/roleAssignments/4dfd5b03-1387-5841-afd9-9a0041833b48",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Insights/components/appi-textclf",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.Insights/components"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.KeyVault/vaults/kv-textclf-n35yfcrr",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.KeyVault/vaults"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.MachineLearningServices/workspaces"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.OperationalInsights/workspaces/log-textclf",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.OperationalInsights/workspaces"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.Storage/storageAccounts/sttextclfn35yfcrrr4src",
+        "identifiers": null,
+        "resourceGroup": "rg-textclf",
+        "resourceType": "Microsoft.Storage/storageAccounts"
+      }
+    ],
+    "outputs": {
+      "acaEnvName": {
+        "type": "String",
+        "value": "cae-textclf"
+      },
+      "acrLoginServer": {
+        "type": "String",
+        "value": "acrtextclfn35yfcrrr4src.azurecr.io"
+      },
+      "acrName": {
+        "type": "String",
+        "value": "acrtextclfn35yfcrrr4src"
+      },
+      "apiFqdn": {
+        "type": "String",
+        "value": "textclf-api.jollygrass-ac688737.eastus2.azurecontainerapps.io"
+      },
+      "mlWorkspaceName": {
+        "type": "String",
+        "value": "mlw-textclf"
+      },
+      "storageAccountName": {
+        "type": "String",
+        "value": "sttextclfn35yfcrrr4src"
+      }
+    },
+    "parameters": {
+      "baseName": {
+        "type": "String",
+        "value": "textclf"
+      },
+      "location": {
+        "type": "String",
+        "value": "eastus2"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.OperationalInsights",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "eastus2"
+            ],
+            "properties": null,
+            "resourceType": "workspaces",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.Insights",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "eastus2"
+            ],
+            "properties": null,
+            "resourceType": "components",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.Storage",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "eastus2"
+            ],
+            "properties": null,
+            "resourceType": "storageAccounts",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.KeyVault",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "eastus2"
+            ],
+            "properties": null,
+            "resourceType": "vaults",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.ContainerRegistry",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "eastus2"
+            ],
+            "properties": null,
+            "resourceType": "registries",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.MachineLearningServices",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "eastus2"
+            ],
+            "properties": null,
+            "resourceType": "workspaces",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.App",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "eastus2"
+            ],
+            "properties": null,
+            "resourceType": "managedEnvironments",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.Resources",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "deployments",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "12830197601234307657",
+    "templateLink": null,
+    "timestamp": "2026-09-10T17:41:19.225224+00:00",
+    "validatedResources": null,
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-textclf",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}
