@@ -1,0 +1,12 @@
+Workspace MLflow (azureml:// tracking URI) for job honest_sheep_xlnkdrchnd, read with MlflowClient on 2026-09-10:
+
+run: honest_sheep_xlnkdrchnd FINISHED
+params: {'model.name': 'textcnn', 'train.epochs': '1', 'train.lr': '0.002', 'device': 'cpu', 'parameters': '1456352'}
+train_loss:    step 0=1.1956
+val_loss:      step 0=0.8825
+val_accuracy:  step 0=0.6580
+val_macro_f1:  step 0=0.6424
+summary: {'best_val_macro_f1': 0.6424, 'best_val_accuracy': 0.658, 'best_epoch': 0.0, 'epochs_run': 1.0, 'wall_clock_s': 5.5932}
+artifacts: ['model/config.json', 'model/labels.json', 'model/metrics.json', 'model/model.pt', 'model/vocab.json']
+
+Identical numbers to the local `make train-local` run (same seed, same data slice): the loop is reproducible across machines.

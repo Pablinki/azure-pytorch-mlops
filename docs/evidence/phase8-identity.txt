@@ -12,3 +12,11 @@ $ gh secret list
   AZURE_CLIENT_ID  AZURE_SUBSCRIPTION_ID  AZURE_TENANT_ID          (ids, not credentials)
 $ gh variable list
   ACA_ENV=cae-textclf  AZURE_ACR_NAME=acrtextclfn35yfcrrr4src  AZURE_ML_WORKSPACE=mlw-textclf  AZURE_RG=rg-textclf  MODEL_VERSION=1
+
+First deploy run (34515231611) failed at azure/login: AADSTS700213 "No matching federated identity record found for
+presented assertion subject 'repo:Pablinki@10887474/azure-pytorch-mlops@1364655068:ref:refs/heads/main'".
+GitHub now includes the owner and repository ids in the OIDC subject; Entra requires an exact match.
+Fix: a second federated credential with that exact subject (no secret involved).
+  github-main-ids  repo:Pablinki@10887474/azure-pytorch-mlops@1364655068:ref:refs/heads/main
+  github-main      repo:Pablinki/azure-pytorch-mlops:ref:refs/heads/main
+MODEL_VERSION variable bumped to 2 after the full training run was registered.

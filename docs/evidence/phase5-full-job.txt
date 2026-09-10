@@ -1,0 +1,27 @@
+Azure ML full training job clever_pummelo_2d96mhbylp (aml/job.yaml: 5 epochs, 120 000 rows), cpu-cluster Standard_DS3_v2,
+environment textclf-train:2, 2026-09-10. Status timeline: 18:32 Preparing -> 18:33 Running -> 18:39 Completed.
+
+user_logs/std_log.txt (trimmed):
+2026-09-10 18:33:42,606 INFO textclf.data: data: train=108000 val=12000 vocab=30000 classes=4 limit=None
+2026-09-10 18:33:42,638 INFO textclf.train: model=textcnn parameters=3995104
+2026-09-10 18:33:43,792 INFO textclf.train: mlflow tracking uri: azureml://eastus2.api.azureml.ms/mlflow/v1.0/...
+2026-09-10 18:35:02,091 INFO textclf.train: epoch=0 train_loss=0.5046 val_loss=0.3000 val_acc=0.9000 val_f1=0.9001
+2026-09-10 18:36:19,056 INFO textclf.train: epoch=1 train_loss=0.2860 val_loss=0.2804 val_acc=0.9138 val_f1=0.9136
+2026-09-10 18:37:36,285 INFO textclf.train: epoch=2 train_loss=0.2183 val_loss=0.3146 val_acc=0.9109 val_f1=0.9106
+2026-09-10 18:38:52,763 INFO textclf.train: epoch=3 train_loss=0.1745 val_loss=0.3351 val_acc=0.9102 val_f1=0.9101
+2026-09-10 18:38:53,198 INFO textclf.train: Early stopping at epoch 3
+2026-09-10 18:38:55,608 INFO textclf.train: exported model.pt, vocab.json, labels.json, config.json, metrics.json to .../model_dir
+
+Workspace MLflow (MlflowClient, azureml:// tracking URI):
+run: clever_pummelo_2d96mhbylp FINISHED
+train_loss:   e0=0.5046, e1=0.2860, e2=0.2183, e3=0.1745
+val_loss:     e0=0.3000, e1=0.2804, e2=0.3146, e3=0.3351
+val_accuracy: e0=0.9000, e1=0.9138, e2=0.9109, e3=0.9102
+val_macro_f1: e0=0.9001, e1=0.9136, e2=0.9106, e3=0.9101
+summary: best_val_accuracy=0.9138 best_val_macro_f1=0.9136 best_epoch=1 epochs_run=4 wall_clock_s=309.4
+artifacts: model/config.json, model/labels.json, model/metrics.json, model/model.pt, model/vocab.json
+
+$ az ml model create --name textclf --type custom_model --path azureml://jobs/clever_pummelo_2d96mhbylp/outputs/model_dir
+MODEL_VERSION=2
+$ az ml model list --name textclf -o table
+textclf 2 (full run) / textclf 1 (smoke run)

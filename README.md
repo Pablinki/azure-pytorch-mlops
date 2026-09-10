@@ -89,7 +89,7 @@ and errors are caught at exactly three boundaries:
 Only transient failures are retried ([retry.py](src/textclf/retry.py): connection errors, timeouts,
 HTTP 408/429/5xx, bounded exponential backoff with jitter). Training failure modes are explicit: non-finite
 loss, CUDA OOM (with an actionable hint), checkpoint I/O (atomic writes), SIGTERM/SIGINT (checkpoint, then
-`--resume-from`). ruff's `BLE` and `TRY` rule sets and 146 tests enforce the contract.
+`--resume-from`). ruff's `BLE` and `TRY` rule sets and 147 tests enforce the contract.
 
 ### Scalability levers
 
@@ -104,19 +104,40 @@ loss, CUDA OOM (with an actionable hint), checkpoint I/O (atomic writes), SIGTER
 
 ## Evidence
 
-Local (Windows 11 laptop, CPU), captured in [docs/evidence/](docs/evidence/):
+All numbers below come from real runs on 2026-09-10 and are captured in [docs/evidence/](docs/evidence/).
 
-| Item | Value | Source |
+**Training on Azure ML** (`cpu-cluster`, one `Standard_DS3_v2` node, job `clever_pummelo_2d96mhbylp`):
+
+| Metric | Value | Source |
 |---|---|---|
-| `make prepare-data` | 120 000 train / 7 600 test rows in 1m40s | `phase2-prepare-data.txt` |
-| `make train-local` (1 epoch, 5 000 rows) | val accuracy 0.658, val macro-F1 0.642, 15 s wall clock | `phase3-train-local.txt` |
-| Test split after that smoke run | accuracy 0.676, macro-F1 0.662 | `phase3-train-local.txt` |
-| MLflow run | params, per-epoch metrics, five artifacts attached | `phase3-train-local.txt` |
-| Local API | `/ready` 200, `/predict` labels + request id, JSON logs | `phase6-local-serve.txt` |
-| Quality gates | ruff clean, mypy strict clean, 146 tests, 96.5 % coverage | `phase6-local-serve.txt` |
+| Validation accuracy (best epoch) | 0.9138 | `phase5-full-job.txt` |
+| Validation macro-F1 (best epoch) | 0.9136 | `phase5-full-job.txt` |
+| Epochs run / best epoch | 4 / 1 (early stopping, patience 2) | `phase5-full-job.txt` |
+| Training wall clock | 309 s (5.2 min) for 108 000 rows | `phase5-full-job.txt` |
+| Job status timeline | Preparing → Running → Completed in 6.5 min | `phase5-full-job.txt` |
+| Registered model | `textclf:2` (full run), `textclf:1` (smoke run) | `phase5-model-registry.txt` |
+| Smoke run reproducibility | cloud `val_f1=0.6424` == local `make train-local` | `phase5-mlflow-metrics.txt` |
 
-Cloud evidence (Azure ML job, registered model, Container Apps revision, scale-to-zero, load test, CI run) is
-added to this table as each billable phase runs; see the "Cost and teardown" section.
+**Serving on Azure Container Apps** (`textclf-api`, 1 vCPU / 2 GiB per replica, scale 0-5):
+
+| Metric | Value | Source |
+|---|---|---|
+| Public `/ready`, `/predict` | HTTP 200, `x-request-id` echoed | `phase7-container-app.txt` |
+| Load test (2 000 requests, 100 concurrent) | 0 errors, 60.5 req/s, p50 1104 ms, p95 4891 ms, p99 6891 ms | `phase7-loadtest.txt` |
+| Replicas under load | 1 → 4 | `phase7-loadtest.txt` |
+| Scale-to-zero after the test | 4 → 1 → 0 within ~4 min idle | `phase7-scale-to-zero.txt` |
+| Cold start (first request after deploy) | ~34 s including image pull | `phase7-container-app.txt` |
+
+p95 includes the scale-out window (KEDA adds a replica per 20 concurrent requests); the replicas are small on
+purpose. Raising `minReplicas` or the CPU size in `infra/app.bicep` trades idle cost for tail latency.
+
+**Local** (Windows 11 laptop, CPU): `make prepare-data` 120 000 / 7 600 rows in 1m40s (`phase2-prepare-data.txt`);
+`make train-local` 15 s (`phase3-train-local.txt`); local API smoke test (`phase6-local-serve.txt`);
+`make check`: ruff clean, mypy strict clean, 147 tests, 96.5 % coverage.
+
+**CI/CD**: [deploy run 34516819374](https://github.com/Pablinki/azure-pytorch-mlops/actions/runs/34516819374) is a
+full `ci → deploy` pass (OIDC login, `textclf:2` download, `az acr build`, `app.bicep`, smoke test) in 4m39s; the
+live revision runs image `textclf-api:<git sha>`. Identity setup in `phase8-identity.txt` (no client secret anywhere).
 
 ## What this project demonstrates
 
@@ -132,7 +153,7 @@ added to this table as each billable phase runs; see the "Cost and teardown" sec
   cloud secrets anywhere).
 - Operable service: JSON logs to Log Analytics, `x-request-id` on every response, error bodies that never leak
   internals.
-- 146 offline tests running in about 10 s, coverage above 95 %, `mypy --strict`.
+- 147 offline tests running in about 10 s, coverage above 95 %, `mypy --strict`.
 
 ## Cost and teardown
 

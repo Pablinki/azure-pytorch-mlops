@@ -1,0 +1,17 @@
+GitHub Actions deploy run (workflow_dispatch, model_version=2): https://github.com/Pablinki/azure-pytorch-mlops/actions/runs/34516819374
+ci / quality: success (Lint, Type check, Tests coverage>=80 %, Bicep lint)
+deploy: success in 4m39s (azure/login@v2 OIDC -> Download the registered model -> Build the image in ACR -> Deploy the container app -> Smoke test)
+
+Previous push run 34515231611 failed at azure/login (AADSTS700213, id-qualified subject) -> fixed with a second federated credential, see phase8-identity.txt
+
+--- step logs (trimmed) ---
+deploy	Download the registered model	2026-09-10T18:53:39.4942245Z ^[[36;1maz ml model download --name textclf --version "$MODEL_VERSION" -g "$RG" -w "$WS" --download-path model_download^[[0m
+deploy	Download the registered model	2026-09-10T18:53:39.4942943Z ^[[36;1mMODEL_DIR=$(dirname "$(find model_download -name model.pt | head -n1)")^[[0m
+deploy	Download the registered model	2026-09-10T18:54:20.7132850Z Downloading the model azureml/clever_pummelo_2d96mhbylp/model_dir/ at model_download/textclf/model_dir
+deploy	Download the registered model	2026-09-10T18:54:22.1440961Z Example: azcopy copy 'https://sttextclfn35yfcrrr4src.blob.core.windows.net/azureml-blobstore-99708169-9336-43ec-ad6b-fb2cdf2d79e1/azur
+deploy	Download the registered model	2026-09-10T18:54:22.1902271Z Example: azcopy copy 'https://sttextclfn35yfcrrr4src.blob.core.windows.net/azureml-blobstore-99708169-9336-43ec-ad6b-fb2cdf2d79e1/azur
+deploy	Download the registered model	2026-09-10T18:54:22.8999201Z config.json
+deploy	Download the registered model	2026-09-10T18:54:22.8999591Z labels.json
+deploy	Download the registered model	2026-09-10T18:54:22.9000620Z model.pt
+deploy	Download the registered model	2026-09-10T18:54:22.9011570Z vocab.json
+deploy	Smoke test	2026-09-10T18:57:45.9634117Z {"status":"ready"}{"predictions":[{"label":"Business","confidence":0.6680312752723694,"scores":{"World":0.20772425830364227,"Sports":0.0091930590569973,"
