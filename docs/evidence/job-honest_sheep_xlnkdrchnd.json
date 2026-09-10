@@ -1,0 +1,97 @@
+{
+  "code": "azureml:/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf/codes/812d3664-076d-47b6-bd7c-3d253aa1c906/versions/1",
+  "command": "pip install --no-deps . && textclf train --config configs/train.yaml --data-dir ${{inputs.data_dir}} --output-dir ${{outputs.model_dir}} --epochs ${{inputs.epochs}} --limit 5000",
+  "compute": "azureml:cpu-cluster",
+  "creation_context": {
+    "created_at": "2026-09-10T18:14:48.779712+00:00",
+    "created_by": "Juan Pablo Perez Franco",
+    "created_by_type": "User"
+  },
+  "description": "Train TextCNN on AG News with MLflow tracking",
+  "display_name": "textclf-smoke",
+  "environment": "azureml:textclf-train:2",
+  "environment_variables": {},
+  "experiment_name": "textclf",
+  "id": "azureml:/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf/jobs/honest_sheep_xlnkdrchnd",
+  "inputs": {
+    "data_dir": {
+      "mode": "ro_mount",
+      "path": "azureml:ag-news:1",
+      "type": "uri_folder"
+    },
+    "epochs": "1"
+  },
+  "name": "honest_sheep_xlnkdrchnd",
+  "outputs": {
+    "default": {
+      "mode": "rw_mount",
+      "path": "azureml://datastores/workspaceartifactstore/ExperimentRun/dcid.honest_sheep_xlnkdrchnd",
+      "type": "uri_folder"
+    },
+    "model_dir": {
+      "mode": "rw_mount",
+      "type": "uri_folder"
+    }
+  },
+  "parameters": {
+    "data.dataset_id": "fancyzhx/ag_news",
+    "data.max_len": "128",
+    "data.min_freq": "2",
+    "data.num_workers": "2",
+    "data.val_fraction": "0.1",
+    "data.vocab_size": "30000",
+    "device": "cpu",
+    "model.dropout": "0.3",
+    "model.embed_dim": "128",
+    "model.kernel_sizes": "[3, 4, 5]",
+    "model.name": "textcnn",
+    "model.num_filters": "100",
+    "parameters": "1456352",
+    "train.amp": "True",
+    "train.batch_size": "64",
+    "train.early_stopping_patience": "2",
+    "train.epochs": "1",
+    "train.lr": "0.002",
+    "train.max_grad_norm": "1.0",
+    "train.seed": "42",
+    "train.weight_decay": "0.01"
+  },
+  "properties": {
+    "ContentSnapshotId": "3ed4e5a2-26e9-421b-9753-d23cd4c642d9",
+    "EndTimeUtc": "2026-09-10 18:31:56",
+    "ProcessInfoFile": "azureml-logs/process_info.json",
+    "ProcessStatusFile": "azureml-logs/process_status.json",
+    "StartTimeUtc": "2026-09-10 18:29:53",
+    "_azureml.ClusterName": "cpu-cluster",
+    "_azureml.ComputeTargetType": "amlctrain",
+    "azureml.git.dirty": "True",
+    "mlflow.source.git.branch": "main",
+    "mlflow.source.git.commit": "30e1878d2a609734a818c2e69372a720ff5da1aa",
+    "mlflow.source.git.repoURL": "https://github.com/Pablinki/azure-pytorch-mlops.git"
+  },
+  "queue_settings": {
+    "job_tier": "null"
+  },
+  "resourceGroup": "rg-textclf",
+  "resources": {
+    "instance_count": 1,
+    "properties": {},
+    "shm_size": "2g"
+  },
+  "services": {
+    "Studio": {
+      "endpoint": "https://ml.azure.com/runs/honest_sheep_xlnkdrchnd?wsid=/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourcegroups/rg-textclf/workspaces/mlw-textclf&tid=fc2b8238-9289-425f-b1b7-b27003d711f3",
+      "type": "Studio"
+    },
+    "Tracking": {
+      "endpoint": "azureml://eastus2.api.azureml.ms/mlflow/v1.0/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf?",
+      "type": "Tracking"
+    }
+  },
+  "status": "Completed",
+  "tags": {
+    "framework": "pytorch",
+    "project": "textclf"
+  },
+  "type": "command"
+}

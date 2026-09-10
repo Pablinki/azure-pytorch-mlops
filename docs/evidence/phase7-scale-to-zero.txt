@@ -1,0 +1,6 @@
+Scale-to-zero after the load test (az containerapp replica list -n textclf-api -g rg-textclf, sampled every 60 s; load test ended ~18:00 UTC):
+18:02:05 replicas=4
+18:03:08 replicas=1
+18:04:11 replicas=0
+
+minReplicas: 0 in infra/app.bicep; the next request after idling cold-starts a replica (measured 34 s on first hit after deploy, incl. image pull).

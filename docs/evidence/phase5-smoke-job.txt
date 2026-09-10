@@ -1,0 +1,24 @@
+Azure ML smoke job honest_sheep_xlnkdrchnd (1 epoch, --limit 5000), cpu-cluster Standard_DS3_v2, environment textclf-train:2 (mlflow<3)
+status timeline: 18:14 Preparing (image build) -> 18:26 Queued -> 18:29 Running -> 18:32 Completed
+
+2026-09-10 18:31:40,664 INFO textclf.data: data: train=4500 val=500 vocab=10166 classes=4 limit=5000
+2026-09-10 18:31:40,676 INFO textclf.train: model=textcnn parameters=1456352
+2026-09-10 18:31:41,805 INFO textclf.train: mlflow tracking uri: azureml://eastus2.api.azureml.ms/mlflow/v1.0/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearni
+2026-09-10 18:31:46,500 INFO textclf.train: epoch=0 train_loss=1.1956 val_loss=0.8825 val_acc=0.6580 val_f1=0.6424
+🏃 View run textclf-smoke at: https://eastus2.api.azureml.ms/mlflow/v2.0/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/workspaces/mlw-textclf/#
+2026-09-10 18:31:49,258 INFO textclf.train: exported model.pt, vocab.json, labels.json, config.json, metrics.json to /mnt/azureml/cr/j/2afc61ad4c2349c685d9b571c958aa0e/cap/data-capability/wd/model_dir/model
+
+downloaded artifact layout (az ml job download --all):
+artifacts/model/config.json
+artifacts/model/labels.json
+artifacts/model/metrics.json
+artifacts/model/model.pt
+artifacts/model/vocab.json
+artifacts/user_logs/std_log.txt
+named-outputs/model_dir/checkpoints/best.pt
+named-outputs/model_dir/checkpoints/last.pt
+named-outputs/model_dir/model/config.json
+named-outputs/model_dir/model/labels.json
+named-outputs/model_dir/model/metrics.json
+named-outputs/model_dir/model/model.pt
+named-outputs/model_dir/model/vocab.json

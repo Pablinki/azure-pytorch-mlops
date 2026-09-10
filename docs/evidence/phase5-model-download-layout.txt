@@ -1,0 +1,11 @@
+$ az ml model download --name textclf --version 1 --download-path model_download
+  model_download/textclf/model_dir/checkpoints/best.pt
+  model_download/textclf/model_dir/checkpoints/last.pt
+  model_download/textclf/model_dir/model/config.json
+  model_download/textclf/model_dir/model/labels.json
+  model_download/textclf/model_dir/model/metrics.json
+  model_download/textclf/model_dir/model/model.pt
+  model_download/textclf/model_dir/model/vocab.json
+
+$ dirname $(find model_download -name model.pt | head -n1)
+model_download/textclf/model_dir/model
