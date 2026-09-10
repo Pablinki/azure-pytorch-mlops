@@ -21,6 +21,8 @@ jobs:
 
   deploy:
     needs: ci
+    # Skipped (not failed) until the Phase 8 identity setup has created the repository variables.
+    if: ${{ vars.AZURE_RG != '' }}
     runs-on: ubuntu-latest
     env:
       RG: ${{ vars.AZURE_RG }}
