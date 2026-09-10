@@ -1,0 +1,9 @@
+Azure ML smoke job olden_branch_p29zhvf2ls (1 epoch, --limit 5000) on cpu-cluster, 2026-09-10: trained and tracked, failed only at the final artifact upload (see D18).
+
+2026-09-10 18:09:36,771 INFO textclf.data: data: train=4500 val=500 vocab=10166 classes=4 limit=5000
+2026-09-10 18:09:36,783 INFO textclf.train: model=textcnn parameters=1456352
+2026-09-10 18:09:37,940 INFO textclf.train: mlflow tracking uri: azureml://eastus2.api.azureml.ms/mlflow/v1.0/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Mic
+2026-09-10 18:09:43,648 INFO textclf.train: epoch=0 train_loss=1.1956 val_loss=0.8825 val_acc=0.6580 val_f1=0.6424
+🏃 View run textclf-smoke at: https://eastus2.api.azureml.ms/mlflow/v2.0/subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf/providers/Microsoft.MachineLearningServices/work
+Traceback (most recent call last):
+TypeError: azureml_artifacts_builder() got an unexpected keyword argument 'tracking_uri'

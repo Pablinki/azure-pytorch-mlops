@@ -107,6 +107,13 @@ The dependency table at the end justifies every third-party package in one line.
   `AcrPull` on the workspace ACR; the container app already does the same for serving.
 - **Consequence:** every image pull in the project (training and serving) is identity-based; the admin user stays off.
 
+## D18. Training pins `mlflow<3` because `azureml-mlflow` lags MLflow 3
+- **Context:** the second smoke job trained and logged metrics to the workspace, then failed in
+  `MlflowClient.log_artifacts` with `azureml_artifacts_builder() got an unexpected keyword argument 'tracking_uri'`:
+  MLflow 3 changed the artifact-repository builder signature and the Azure plugin has not caught up.
+- **Decision:** `train` extra requires `mlflow>=2.13,<3`; the local sqlite backend (D6) works on both lines.
+- **Consequence:** one pin to revisit when `azureml-mlflow` supports MLflow 3; nothing else in the code changes.
+
 ## Dependency justification
 
 | Package | Why |
