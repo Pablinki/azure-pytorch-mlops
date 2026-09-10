@@ -15,3 +15,5 @@ deploy	Download the registered model	2026-09-10T18:54:22.8999591Z labels.json
 deploy	Download the registered model	2026-09-10T18:54:22.9000620Z model.pt
 deploy	Download the registered model	2026-09-10T18:54:22.9011570Z vocab.json
 deploy	Smoke test	2026-09-10T18:57:45.9634117Z {"status":"ready"}{"predictions":[{"label":"Business","confidence":0.6680312752723694,"scores":{"World":0.20772425830364227,"Sports":0.0091930590569973,"
+
+Push-to-main run (commit 4d0d8f2): https://github.com/Pablinki/azure-pytorch-mlops/actions/runs/34517662172  ci/quality success (2m18s), deploy success (4m19s)

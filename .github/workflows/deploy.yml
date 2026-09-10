@@ -3,6 +3,7 @@ name: deploy
 on:
   push:
     branches: [main]
+    paths-ignore: ['docs/**', '*.md']   # documentation changes do not rebuild the image
   workflow_dispatch:
     inputs:
       model_version:
