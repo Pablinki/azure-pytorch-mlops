@@ -133,6 +133,16 @@ def test_request_id_echoed_or_generated(client: TestClient) -> None:
     assert len(generated.headers["x-request-id"]) == 36  # uuid4
 
 
+def test_access_log_carries_request_id(
+    client: TestClient, caplog: pytest.LogCaptureFixture
+) -> None:
+    with caplog.at_level("INFO", logger="textclf.api.app"):
+        client.post("/predict", json={"texts": ["x"]}, headers={"x-request-id": "trace-me"})
+    access = [r for r in caplog.records if r.getMessage().startswith("POST /predict -> 200")]
+    assert len(access) == 1
+    assert access[0].request_id == "trace-me"  # type: ignore[attr-defined]  # via extra=
+
+
 def test_startup_fails_fast_when_model_missing(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

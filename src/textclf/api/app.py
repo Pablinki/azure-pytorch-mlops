@@ -8,6 +8,7 @@ the request id, and the traceback lives in the logs under that id.
 from __future__ import annotations
 
 import logging
+import time
 import uuid
 from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
@@ -50,8 +51,18 @@ async def request_id_middleware(
     request: Request, call_next: Callable[[Request], Awaitable[Response]]
 ) -> Response:
     request.state.request_id = request.headers.get("x-request-id", str(uuid.uuid4()))
+    started = time.perf_counter()
     response = await call_next(request)
     response.headers["x-request-id"] = request.state.request_id
+    # One structured access line per request: the request id is what you grep for in Log Analytics.
+    log.info(
+        "%s %s -> %d in %.1f ms",
+        request.method,
+        request.url.path,
+        response.status_code,
+        (time.perf_counter() - started) * 1000,
+        extra={"request_id": request.state.request_id},
+    )
     return response
 
 

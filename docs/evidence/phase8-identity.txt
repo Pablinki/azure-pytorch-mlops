@@ -1,0 +1,14 @@
+Phase 8 one-time identity setup (2026-09-10). No client secret was created at any point.
+
+$ az ad app create --display-name textclf-github-oidc            -> app registration created (client id stored only as a GitHub secret)
+$ az ad sp create --id $APP_ID                                   -> service principal created
+$ az ad app federated-credential create --id $APP_ID --parameters fedcred.json
+  Name         Subject                                                Issuer
+  github-main  repo:Pablinki/azure-pytorch-mlops:ref:refs/heads/main  https://token.actions.githubusercontent.com
+$ az role assignment create --assignee-object-id $SP_OID --assignee-principal-type ServicePrincipal --role Contributor --scope $RG_ID
+  Scope: /subscriptions/67140d51-8eaf-4ed2-8b85-97ba469a091e/resourceGroups/rg-textclf
+
+$ gh secret list
+  AZURE_CLIENT_ID  AZURE_SUBSCRIPTION_ID  AZURE_TENANT_ID          (ids, not credentials)
+$ gh variable list
+  ACA_ENV=cae-textclf  AZURE_ACR_NAME=acrtextclfn35yfcrrr4src  AZURE_ML_WORKSPACE=mlw-textclf  AZURE_RG=rg-textclf  MODEL_VERSION=1

@@ -1,0 +1,22 @@
+{
+  "url": "https://textclf-api.jollygrass-ac688737.eastus2.azurecontainerapps.io",
+  "requests": 2000,
+  "concurrency": 100,
+  "texts_per_request": 1,
+  "elapsed_s": 33.08,
+  "throughput_rps": 60.5,
+  "p50_ms": 1104.0,
+  "p95_ms": 4890.9,
+  "p99_ms": 6890.9,
+  "mean_ms": 1611.7,
+  "errors": 0,
+  "error_rate": 0.0
+}
+
+Replica count sampled every ~20 s during the load test (az containerapp replica list, KEDA http rule: 20 concurrent requests per replica, maxReplicas 5):
+17:56:53 replicas=1
+17:57:16 replicas=4
+17:57:39 replicas=4
+17:58:02 replicas=4
+
+Note: p95/p99 include the scale-out window (1 -> 4 replicas) and the 1 vCPU / 2 GiB replica size; the model is the 1-epoch smoke model.

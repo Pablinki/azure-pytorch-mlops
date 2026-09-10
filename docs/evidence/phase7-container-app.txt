@@ -1,0 +1,23 @@
+Phase 7 (2026-09-10): image textclf-api:c242f71 built with 'az acr build' (run Succeeded), deployed with infra/app.bicep (38 s, Succeeded)
+
+$ curl https://textclf-api.jollygrass-ac688737.eastus2.azurecontainerapps.io/ready   (first hit after deploy: 404 from the previous revision for 34 s, then)
+{"status":"ready"} HTTP 200 in 0.26s
+$ curl https://textclf-api.jollygrass-ac688737.eastus2.azurecontainerapps.io/health
+{"status":"ok","version":"0.1.0"}
+$ curl -X POST https://textclf-api.jollygrass-ac688737.eastus2.azurecontainerapps.io/predict -H 'x-request-id: phase7-demo' -d '{"texts":["Stocks rally as tech earnings beat expectations","Real Madrid wins the derby in extra time", ...]}'
+HTTP/1.1 200 OK  x-request-id: phase7-demo  -> labels: Business (0.82), Sports (0.72), Sports (0.56), World (0.32)   [1-epoch/5k-row smoke model]
+
+$ az containerapp revision list -n textclf-api -g rg-textclf -o table
+Name                  Active    Health    Running    Replicas    Image
+--------------------  --------  --------  ---------  ----------  ------------------------------------------------------
+textclf-api--0000001  True      Healthy   Running    1           acrtextclfn35yfcrrr4src.azurecr.io/textclf-api:c242f71
+
+$ az containerapp replica list -n textclf-api -g rg-textclf -o table
+Name                                  Created               Running
+------------------------------------  --------------------  ---------
+textclf-api--0000001-6774b54dd-lvbdg  2026-09-10T17:54:51Z  Running
+
+$ az containerapp logs show -n textclf-api -g rg-textclf --tail 30  (JSON lines; request_id visible)
+2026-09-10T17:55:24.825501301Z {"ts": "2026-09-10T17:55:24Z", "level": "INFO", "logger": "textclf.api.app", "msg": "model loaded from file:///app/model (torch threads=2)"}
+2026-09-10T17:55:24.831465903Z {"ts": "2026-09-10T17:55:24Z", "level": "INFO", "logger": "uvicorn.error", "msg": "Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)"}
+2026-09-10T17:56:00.352924308Z {"ts": "2026-09-10T17:56:00Z", "level": "INFO", "logger": "uvicorn.access", "msg": "100.100.0.23:50424 - \"POST /predict HTTP/1.1\" 200"}
