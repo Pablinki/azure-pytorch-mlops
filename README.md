@@ -38,7 +38,9 @@ flowchart LR
 | CI/CD | GitHub Actions, `azure/login` with OIDC, `az acr build` | Zero stored cloud secrets, no Docker needed on the runner |
 | Observability | JSON logs → Log Analytics; `/health` + `/ready` probes; `x-request-id` on every response | Enough to debug production without an APM |
 
-Every decision has a short entry in [docs/DECISIONS.md](docs/DECISIONS.md).
+Every decision has a short entry in [docs/DECISIONS.md](docs/DECISIONS.md). For a step-by-step guide to setting
+up, developing and operating the project (with every error we hit and its fix), read
+[docs/TUTORIAL.md](docs/TUTORIAL.md).
 
 ## Quickstart (local, CPU)
 
